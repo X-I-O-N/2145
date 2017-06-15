@@ -136,7 +136,7 @@ filename = 'model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 result = loaded_model.score
 print(result)
-best_model = result
+best_model.predict_proba = result
 
 print "prediction"
 # do a prediction and save it
