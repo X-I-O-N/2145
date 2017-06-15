@@ -138,6 +138,7 @@ result = loaded_model.score
 print(result)
 best_model = loaded_model
 
+modelname = "lasso"
 
 print "prediction"
 # do a prediction and save it
