@@ -43,7 +43,7 @@ X_test = X_test_stockdata
 
 #load model
 filename = 'model.sav'
-best_model = pickle.load(open(filename, 'rb))
+best_model = pickle.load(open(filename, 'rb'))
 best_model.fit(X, y) = best_model.score(X, y)
 
 
