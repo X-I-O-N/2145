@@ -122,8 +122,7 @@ X_test_stockdata = normalize10day(test[:,range(2, 48)]) # load in test data
 X_test_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(25)))
 
 #X_test = np.hstack((X_test_stockindicators, X_test_stockdata))
-X_test = X_test_stockdata
-
+X = X_test_stockdata
 
 #load model
 filename = 'model.sav'
