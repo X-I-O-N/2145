@@ -139,6 +139,8 @@ print(result)
 best_model = loaded_model
 
 modelname = "lasso"
+best_cv = cv_scores[best]
+best_C = C[best]
 
 print "prediction"
 # do a prediction and save it
