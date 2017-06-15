@@ -23,6 +23,7 @@ from itertools import combinations
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, ExtraTreesClassifier
 import operator
 from sklearn import svm
+import pickle
 
 # <codecell>
 def tied_rank(x):
@@ -193,17 +194,8 @@ print "BEST %f: %f" % (best_C, best_cv)
 print "training on full data"
 # fit the best model on the full data
 best_model.fit(X, y)
-
-print "prediction"
-# do a prediction and save it
-pred = best_model.predict_proba(X_test)[:,1]
-testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
-
-# submit as D multiplied by 100 + stock id
-testindices = [100 * D + StId for (D, StId) in testfile.index]
-
-pred_df = p.DataFrame(np.vstack((testindices, pred)).transpose(), columns=["Id", "Prediction"])
-pred_df.to_csv('./predictions/' + modelname + '/' + modelname + ' ' + strftime("%m-%d %X") + " C-" + str(round(best_C,4)) + " CV-" + str(round(best_cv, 4)) + ".csv", index = False)
-
-print "submission file created"
+#save model to disk
+filename = 'model.sav'
+pickle.dump(best_model, open(filename, 'wb'))
+print "all done Teerth"
 
