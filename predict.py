@@ -138,7 +138,7 @@ result = loaded_model.score
 print(result)
 best_model = loaded_model
 
-modelname = "lasso"
+modelname = "ridge"
 best_cv = 111
 best_C = 222
 
