@@ -138,7 +138,7 @@ result = loaded_model.score
 print(result)
 best_model = loaded_model
 
-cv_scores = np.mean(cross_validation.cross_val_score(best_model, X, y, cv=5, n_jobs=-1, scoring = auc_scorer))
+cv_scores = np.mean(cross_validation.cross_val_score(best_model, cv=5, n_jobs=-1, scoring = auc_scorer))
 modelname = "lasso"
 best = cv_scores.index(max(cv_scores))
 best_cv = cv_scores[best]
