@@ -134,10 +134,10 @@ X_test = X_test_stockdata
 #load model
 filename = 'model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
-result = loaded_model.score
+result = loaded_model.score(X_test)
 print(result)
 best_model = result
-best_model.compile(X, y)
+
 
 print "prediction"
 # do a prediction and save it
