@@ -124,19 +124,19 @@ X_test_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(
 #X_test = np.hstack((X_test_stockindicators, X_test_stockdata))
 X_test = X_test_stockdata
 
-n_windows = 490
-windows = range(n_windows)
+#n_windows = 490
+#windows = range(n_windows)
 
 # read in the response variable
-y_stockdata = np.vstack([test[:, [46 + 5*w, 49 + 5*w]] for w in windows])
-y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
+#y_stockdata = np.vstack([test[:, [46 + 5*w, 49 + 5*w]] for w in windows])
+#y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
 
 #load model
 filename = 'model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
-result = loaded_model.score(X_test, y)
+result = loaded_model.score
 print(result)
-best_model = result
+best_model = loaded_model
 
 
 print "prediction"
