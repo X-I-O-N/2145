@@ -128,8 +128,8 @@ X_test = X_test_stockdata
 #windows = range(n_windows)
 
 # read in the response variable
-#y_stockdata = np.vstack([test[:, [46 + 5*w, 49 + 5*w]] for w in windows])
-#y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
+y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
+y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
 
 #load model
 filename = 'model.sav'
