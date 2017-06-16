@@ -127,16 +127,16 @@ model_stacker = loaded_model
 
 #print "prediction"
 # do a prediction and save it
-#pred_ridge_test = model_ridge.fit(X, y).predict_proba(X_test)[:,1]
-#pred_randomforest_test = model_randomforest.fit(X, y).predict_proba(X_test)[:,1]
-#pred_lasso_test = model_lasso.fit(X, y).predict_proba(X_test)[:,1]
-#pred_gbt_test = model_gbt.fit(X, y).predict_proba(X_test)[:,1]
+pred_ridge_test = model_ridge.fit(X, y).predict_proba(X_test)[:,1]
+pred_randomforest_test = model_randomforest.fit(X, y).predict_proba(X_test)[:,1]
+pred_lasso_test = model_lasso.fit(X, y).predict_proba(X_test)[:,1]
+pred_gbt_test = model_gbt.fit(X, y).predict_proba(X_test)[:,1]
 
-#new_X_test = np.hstack((np.array(pred_ridge_test).reshape(len(pred_ridge_test), 1), np.array(pred_randomforest_test).reshape(len(pred_randomforest_test), 1), np.array(pred_lasso_test).reshape(len(pred_lasso_test), 1), np.array(pred_gbt_test).reshape(len(pred_gbt_test), 1)))
+new_X_test = np.hstack((np.array(pred_ridge_test).reshape(len(pred_ridge_test), 1), np.array(pred_randomforest_test).reshape(len(pred_randomforest_test), 1), np.array(pred_lasso_test).reshape(len(pred_lasso_test), 1), np.array(pred_gbt_test).reshape(len(pred_gbt_test), 1)))
 
 # <codecell>
 
-pred = model_stacker.predict_proba(X_test)[:,1]
+pred = model_stacker.predict_proba(new_X_test)[:,1]
 testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
 
 # submit as D multiplied by 100 + stock id
