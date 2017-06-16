@@ -158,7 +158,7 @@ for i in range(10):
     indxs_to_fit = list(set(range(X.shape[0])) - set(np.arange(i, X.shape[0], 10)))
     pred_ridge = pred_ridge + list(model_ridge.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
     pred_randomforest = pred_randomforest + list(model_randomforest.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])                               
-    new_Y = new_Y + list(y[indxs,:])
+    new_Y = new_Y + list(y[indxs[:]])
                                                                    
 new_X = np.hstack((np.array(pred_ridge).reshape(len(pred_ridge), 1), np.array(pred_randomforest).reshape(len(pred_randomforest), 1)))
 print new_X
