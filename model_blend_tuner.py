@@ -166,7 +166,11 @@ if modelname == "ridge":
 
 if modelname == "lasso": 
     C = np.linspace(300, 5000, num = 10)[::-1]
-    models = [lm.LogisticRegression(penalty = "l1", C = c) for c in C]
+    models = [lm.LogisticRegression(penalty='l2', C = 5000),
+          lm.LogisticRegression(penalty='l1', C = 500),
+          RandomForestClassifier(n_estimators = 100),
+          GradientBoostingClassifier(n_estimators = 200),
+          ]
 
 if modelname == "sgd": 
     C = np.linspace(0.00005, .01, num = 5)
@@ -175,27 +179,50 @@ if modelname == "sgd":
 if modelname == "randomforest":
     C = np.linspace(50, 300, num = 10)
     models = [RandomForestClassifier(n_estimators = int(c)) for c in C]
+def get_oos_predictions(models, X, y, folds = 10):
+    
+    # this is simply so we know how far the model has progressed
+    sys.stdout.write('.')
+    predictions = [[] for model in models]
+    new_Y = []
+    
+    # for every fold of the data...
+    for i in range(folds):
+        
+        # find the indices that we want to train and predict
+        indxs = np.arange(i, X.shape[0], folds)
+        indxs_to_fit = list(set(range(X.shape[0])) - set(np.arange(i, X.shape[0], folds)))
+        
+        # put together the predictions for each model
+        for i, model in enumerate(models):
+            predictions[i].extend(list(model.fit(X[indxs_to_fit,:], y[indxs_to_fit,:]).predict_proba(X[indxs,:])[:,1]))
+            
+        # put together the reordered new_Y
+        new_Y = new_Y + list(y[indxs,:])
+    
+    # format everything for return
+    new_X = np.hstack([np.array(prediction).reshape(len(prediction), 1) for prediction in predictions])
+    new_Y = np.array(new_Y).reshape(len(new_Y), 1)
+    return new_X, new_Y
+# run the code and get the new_X and new_Y estimates.
+new_X, new_Y = get_oos_predictions(models, X, y)
 
-print "calculating cv scores"
-cv_scores = [0] * len(models)
-for i, model in enumerate(models):
-    # for all of the models, save the cross-validation scores into the array cv_scores
-    cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, n_jobs=-1, scoring = auc_scorer))
-    #cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, score_func = auc))
-    print " (%d/%d) C = %f: CV = %f" % (i + 1, len(C), C[i], cv_scores[i])
+model_stacker = lm.LogisticRegression()
 
-# find which model and C is the best
-best = cv_scores.index(max(cv_scores))
-best_model = models[best]
-best_cv = cv_scores[best]
-best_C = C[best]
-print "BEST %f: %f" % (best_C, best_cv)
+print mean(cross_validation.cross_val_score(model_stacker, new_X, new_Y.reshape(new_Y.shape[0]), cv=5, scoring = auc_scorer))
+
+
 
 print "training on full data"
-# fit the best model on the full data
-best_model.fit(X, y)
+# we fit the model so that we are able to make predictions using our new blended model
+model_stacker.fit(new_X, new_Y.reshape(new_Y.shape[0]))
 #save model to disk
 filename = 'model.sav'
-pickle.dump(best_model, open(filename, 'wb'))
+pickle.dump(model_stacker, open(filename, 'wb'))
 print "all done Teerth"
+
+# we see what weights the blended model assigns to the probability predictions of each model.
+print model_stacker.coef_
+
+
 
