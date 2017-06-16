@@ -132,7 +132,7 @@ X_test = X_test_stockdata
 #y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
 
 #load model
-filename = 'allmodels.sav'
+filename = 'model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 result = loaded_model.score
 print(result)
