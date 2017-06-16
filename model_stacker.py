@@ -190,10 +190,10 @@ def get_oos_predictions(models, X, y, folds = 10):
         
         # put together the predictions for each model
         for i, model in enumerate(models):
-            predictions[i].extend(list(model.fit(X[indxs_to_fit,:], y[indxs_to_fit,:]).predict_proba(X[indxs,:])[:,1]))
+            predictions[i].extend(list(model.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1]))
             
         # put together the reordered new_Y
-        new_Y = new_Y + list(y[indxs,:])
+        new_Y = new_Y + list(y[indxs[:]])
     
     # format everything for return
     new_X = np.hstack([np.array(prediction).reshape(len(prediction), 1) for prediction in predictions])
