@@ -123,7 +123,10 @@ loaded_model = pickle.load(open(filename, 'rb'))
 result = loaded_model.score
 print(result)
 model_stacker = loaded_model
-
+model_ridge = lm.LogisticRegression(penalty='l2', dual=False, tol=0.0001, C=9081)
+model_randomforest = RandomForestClassifier(n_estimators = 200)
+model_lasso = lm.LogisticRegression(penalty = "l1", C = 9081)
+model_gbt = GradientBoostingClassifier(n_estimators = 200)
 
 #print "prediction"
 # do a prediction and save it
