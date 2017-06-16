@@ -162,8 +162,8 @@ for i in range(10):
     indxs_to_fit = list(set(range(X.shape[0])) - set(np.arange(i, X.shape[0], 10)))
     pred_ridge = pred_ridge + list(model_ridge.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
     pred_randomforest = pred_randomforest + list(model_randomforest.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
-	pred_lasso = pred_lasso + list(model_lasso.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
-	pred_gbt = pred_gbt + list(model_gbt.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
+    pred_lasso = pred_lasso + list(model_lasso.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
+    pred_gbt = pred_gbt + list(model_gbt.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
     new_Y = new_Y + list(y[indxs[:]])
 	
                                                                    
