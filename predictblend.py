@@ -115,8 +115,11 @@ X_test_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(
 
 #X_test = np.hstack((X_test_stockindicators, X_test_stockdata))
 X_test = X_test_stockdata
-
-
+n_windows = 490
+windows = range(n_windows)
+X = np.vstack(X_windows_normalized)
+X_test = X_test[:,[0, 3, 5, 8, 10, 13, 15, 18, 20, 23, 25, 28, 30]]
+X = X[:,[0, 3, 5, 8, 10, 13, 15, 18, 20, 23, 25, 28, 30]]
 #load model
 filename = 'blendedmodel.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
