@@ -147,24 +147,64 @@ print "this step done"
 # <codecell>
 
 # BEST IS 133
-model_ridge = lm.LogisticRegression(penalty='l2', dual=False, tol=0.0001, C=9081)
-model_randomforest = RandomForestClassifier(n_estimators = 200)
-
-pred_ridge = []
-pred_randomforest = []
-new_Y = []
-for i in range(10):
-    indxs = np.arange(i, X.shape[0], 10)
-    indxs_to_fit = list(set(range(X.shape[0])) - set(np.arange(i, X.shape[0], 10)))
-    pred_ridge = pred_ridge + list(model_ridge.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
-    pred_randomforest = pred_randomforest + list(model_randomforest.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])                               
-    new_Y = new_Y + list(y[indxs[:]])
+#model_ridge = lm.LogisticRegression(penalty='l2', dual=False, tol=0.0001, C=9081)
+#model_randomforest = RandomForestClassifier(n_estimators = 200)
+#
+#pred_ridge = []
+#pred_randomforest = []
+#new_Y = []
+#for i in range(10):
+#    indxs = np.arange(i, X.shape[0], 10)
+#    indxs_to_fit = list(set(range(X.shape[0])) - set(np.arange(i, X.shape[0], 10)))
+#    pred_ridge = pred_ridge + list(model_ridge.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])
+#    pred_randomforest = pred_randomforest + list(model_randomforest.fit(X[indxs_to_fit[:]], y[indxs_to_fit[:]]).predict_proba(X[indxs,:])[:,1])                               
+#    new_Y = new_Y + list(y[indxs[:]])
                                                                    
-new_X = np.hstack((np.array(pred_ridge).reshape(len(pred_ridge), 1), np.array(pred_randomforest).reshape(len(pred_randomforest), 1)))
-print new_X
-new_Y = np.array(new_Y).reshape(len(new_Y), 1)
+#new_X = np.hstack((np.array(pred_ridge).reshape(len(pred_ridge), 1), np.array(pred_randomforest).reshape(len(pred_randomforest), 1)))
+#print new_X
+#new_Y = np.array(new_Y).reshape(len(new_Y), 1)
 
 # <codecell>
+
+#new
+
+models = [lm.LogisticRegression(penalty='l2', C = 5000),
+          lm.LogisticRegression(penalty='l1', C = 500),
+          RandomForestClassifier(n_estimators = 100),
+          GradientBoostingClassifier(n_estimators = 200),
+          ]
+
+def get_oos_predictions(models, X, y, folds = 10):
+    
+    # this is simply so we know how far the model has progressed
+    sys.stdout.write('.')
+    predictions = [[] for model in models]
+    new_Y = []
+    
+    # for every fold of the data...
+    for i in range(folds):
+        
+        # find the indices that we want to train and predict
+        indxs = np.arange(i, X.shape[0], folds)
+        indxs_to_fit = list(set(range(X.shape[0])) - set(np.arange(i, X.shape[0], folds)))
+        
+        # put together the predictions for each model
+        for i, model in enumerate(models):
+            predictions[i].extend(list(model.fit(X[indxs_to_fit,:], y[indxs_to_fit,:]).predict_proba(X[indxs,:])[:,1]))
+            
+        # put together the reordered new_Y
+        new_Y = new_Y + list(y[indxs,:])
+    
+    # format everything for return
+    new_X = np.hstack([np.array(prediction).reshape(len(prediction), 1) for prediction in predictions])
+    new_Y = np.array(new_Y).reshape(len(new_Y), 1)
+    return new_X, new_Y
+
+# run the code and get the new_X and new_Y estimates.
+new_X, new_Y = get_oos_predictions(models, X, y)
+
+#new
+
 
 model_stacker = lm.LogisticRegression()
 print np.mean(cross_validation.cross_val_score(model_stacker, new_X, new_Y.reshape(new_Y.shape[0]), cv=5, scoring = auc_scorer))
