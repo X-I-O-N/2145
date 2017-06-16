@@ -177,7 +177,7 @@ if modelname == "randomforest":
     models = [RandomForestClassifier(n_estimators = int(c)) for c in C]
 
 if modelname == "blend":
-    C = np.linspace(50, 300, num = 10)
+    #C = np.linspace(50, 300, num = 10)
     models = [lm.LogisticRegression(penalty='l2', C = 5000),
           lm.LogisticRegression(penalty='l1', C = 500),
           RandomForestClassifier(n_estimators = 100),
