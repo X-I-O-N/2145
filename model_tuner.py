@@ -176,6 +176,14 @@ if modelname == "randomforest":
     C = np.linspace(50, 300, num = 10)
     models = [RandomForestClassifier(n_estimators = int(c)) for c in C]
 
+if modelname == "blend":
+    C = np.linspace(50, 300, num = 10)
+    models = [lm.LogisticRegression(penalty='l2', C = 5000),
+          lm.LogisticRegression(penalty='l1', C = 500),
+          RandomForestClassifier(n_estimators = 100),
+          GradientBoostingClassifier(n_estimators = 200),
+          ]
+
 print "calculating cv scores"
 cv_scores = [0] * len(models)
 for i, model in enumerate(models):
