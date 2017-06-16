@@ -212,28 +212,34 @@ print np.mean(cross_validation.cross_val_score(model_stacker, new_X, new_Y.resha
 # <codecell>
 
 model_stacker.fit(new_X, new_Y.reshape(new_Y.shape[0]))
+#save model to disk
+filename = 'allmodels.sav'
+pickle.dump(model_stacker, open(filename, 'wb'))
+print "all done Teerth"
 
-print "prediction"
-# do a prediction and save it
-pred_ridge_test = model_ridge.fit(X, y).predict_proba(X_test)[:,1]
-pred_randomforest_test = model_randomforest.fit(X, y).predict_proba(X_test)[:,1]
-
-new_X_test = np.hstack((np.array(pred_ridge_test).reshape(len(pred_ridge_test), 1), np.array(pred_randomforest_test).reshape(len(pred_randomforest_test), 1)))
-
-# <codecell>
-
-pred = model_stacker.predict_proba(new_X_test)[:,1]
-testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
-
-# submit as D multiplied by 100 + stock id
-testindices = [100 * D + StId for (D, StId) in testfile.index]
-
-pred_df = p.DataFrame(np.vstack((testindices, pred)).transpose(), columns=["Id", "Prediction"])
-pred_df.to_csv('./predictions/' + 'stacker' + '/' + 'stacker' + ' ' + strftime("%m-%d %X") + ".csv", index = False)
-
-print "submission file created"
-
-# <codecell>
 
 model_stacker.coef_
+
+#print "prediction"
+# do a prediction and save it
+#pred_ridge_test = model_ridge.fit(X, y).predict_proba(X_test)[:,1]
+#pred_randomforest_test = model_randomforest.fit(X, y).predict_proba(X_test)[:,1]
+
+#new_X_test = np.hstack((np.array(pred_ridge_test).reshape(len(pred_ridge_test), 1), np.array(pred_randomforest_test).reshape(len(pred_randomforest_test), 1)))
+
+# <codecell>
+
+#pred = model_stacker.predict_proba(new_X_test)[:,1]
+#testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
+
+# submit as D multiplied by 100 + stock id
+#testindices = [100 * D + StId for (D, StId) in testfile.index]
+
+#pred_df = p.DataFrame(np.vstack((testindices, pred)).transpose(), columns=["Id", "Prediction"])
+#pred_df.to_csv('./predictions/' + 'stacker' + '/' + 'stacker' + ' ' + strftime("%m-%d %X") + ".csv", index = False)
+
+#print "submission file created"
+
+# <codecell>
+
 
