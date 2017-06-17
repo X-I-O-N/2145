@@ -3,6 +3,7 @@
 
 # <codecell>
 import numpy as np
+from numpy import *
 import math
 from math import log
 from sklearn import metrics,preprocessing,cross_validation
@@ -24,7 +25,6 @@ from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier,
 import operator
 from sklearn import svm
 import pickle
-from statistics import mean
 
 # <codecell>
 def tied_rank(x):
