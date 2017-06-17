@@ -158,7 +158,7 @@ print "this step done"
 
 print "preparing models"
 
-modelname = "blend"
+modelname = "lasso"
 
 if modelname == "ridge": 
     C = np.linspace(300, 5000, num = 10)[::-1]
