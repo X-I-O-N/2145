@@ -24,6 +24,7 @@ from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier,
 import operator
 from sklearn import svm
 import pickle
+from statistics import mean
 
 # <codecell>
 def tied_rank(x):
