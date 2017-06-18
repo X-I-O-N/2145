@@ -24,6 +24,7 @@ from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier,
 import operator
 from sklearn import svm
 import pickle
+from itertools import chain
 
 # <codecell>
 def tied_rank(x):
