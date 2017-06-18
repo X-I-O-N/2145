@@ -120,7 +120,7 @@ def normalize10day(stocks):
 # <codecell>
 
 print "loading data.."
-train = np.array(p.read_table('./FinalCSV.csv', sep = ","))
+train = np.array(p.read_table('./FinalCSVCC.csv', sep = ","))
 test = np.array(p.read_table('./test.csv', sep = ","))
 
 if train.shape[0] == 94: # if we're using the kaggle training data
