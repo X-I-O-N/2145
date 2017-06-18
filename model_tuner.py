@@ -24,7 +24,6 @@ from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier,
 import operator
 from sklearn import svm
 import pickle
-from itertools import chain
 
 # <codecell>
 def tied_rank(x):
@@ -120,39 +119,21 @@ def normalize10day(stocks):
 # <codecell>
 
 print "loading data.."
-train = np.array(p.read_table('./FinalCSVCC.csv', sep = ","))
+train = np.array(p.read_table('./FinalCSV.csv', sep = ","))
 test = np.array(p.read_table('./test.csv', sep = ","))
 
-#if train.shape[0] == 94: # if we're using the kaggle training data
- #   n_windows = 490
-  #  windows = range(n_windows)
-    
-    # we convert the 500 day data into a stack of 10 day data.
-   # X_windows = [train[:,range(1 + 5*w, 47 + 5*w)] for w in windows]
-    #X_windows_normalized = [normalize10day(w) for w in X_windows]
-    
-    #X = np.vstack(X_windows_normalized)
-    
-    # read in the response variable and convert to indicators
-    #y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
-   # y = (y_stockdata[:,1] > y_stockdata[:,0]) + 0
-    
 ################################################################################
-# READ IN THE MODERN TRAIN DATA
+# READ IN THE TEST DATA
 ################################################################################
+# all data from opening 1 to straight to opening 10
+X_test_stockdata = normalize10day(test[:,range(2, 48)]) # load in test data
+X_test_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(25)))
 
-#else:
-    # chain.from_iterable is basically a "flatten" function, that takes a list of lists and 
-    # converts it to one list
-    # columns we want are just the opening and closing prices
- #   columns_we_want = list(chain.from_iterable([[5 * x, 5 * x + 3] for x in range(10)]))[:-1]
-    
-    # we get our matrix of open and close prices, and normalize the data such that all data
-    # is divided by the opening price on the first day
-  #  X = np.array([l/l[0] for l in train[:, columns_we_want]])
-    
-    # we make indicators of whether or not the stock went up that day.
-   # y = (train[:, 48] > train[:, 45]) + 0
+#X_test = np.hstack((X_test_stockindicators, X_test_stockdata))
+X_test = X_test_stockdata
+
+#np.identity(94)[:,range(93)]
+
 ################################################################################
 # READ IN THE TRAIN DATA
 ################################################################################
@@ -164,7 +145,7 @@ X_windows_normalized = [normalize10day(w) for w in X_windows]
 X_stockdata = np.vstack(X_windows_normalized)
 X_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(n_windows)))
 
-X = np.hstack((X_stockindicators, X_stockdata))
+#X = np.hstack((X_stockindicators, X_stockdata))
 X = X_stockdata
 
 # read in the response variable
@@ -207,7 +188,7 @@ print "calculating cv scores"
 cv_scores = [0] * len(models)
 for i, model in enumerate(models):
     # for all of the models, save the cross-validation scores into the array cv_scores
-    cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, scoring = auc_scorer))
+    cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, n_jobs=-1, scoring = auc_scorer))
     #cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, score_func = auc))
     print " (%d/%d) C = %f: CV = %f" % (i + 1, len(C), C[i], cv_scores[i])
 
