@@ -207,7 +207,7 @@ print "calculating cv scores"
 cv_scores = [0] * len(models)
 for i, model in enumerate(models):
     # for all of the models, save the cross-validation scores into the array cv_scores
-    cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, n_jobs=-1, scoring = auc_scorer))
+    cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, scoring = auc_scorer))
     #cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, score_func = auc))
     print " (%d/%d) C = %f: CV = %f" % (i + 1, len(C), C[i], cv_scores[i])
 
