@@ -174,7 +174,7 @@ print "this step done"
           #GradientBoostingClassifier(n_estimators = 200),
           #]
 
-models = [lm.Perceptron(n_jobs=-1)]
+models = [lm.LogisticRegression(n_jobs=-1)]
 
 def get_oos_predictions(models, X, y, folds = 10):
     
