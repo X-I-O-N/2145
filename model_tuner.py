@@ -25,7 +25,7 @@ import operator
 from sklearn import svm
 import pickle
 from sklearn import *
-
+from sklearn.neural_network import *
 # <codecell>
 def tied_rank(x):
     """
