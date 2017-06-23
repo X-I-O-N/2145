@@ -26,6 +26,7 @@ from sklearn import svm
 import pickle
 from sklearn import *
 from sklearn.neural_network import *
+from sklearn.neural_network import MLPRegressor
 # <codecell>
 def tied_rank(x):
     """
