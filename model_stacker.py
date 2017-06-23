@@ -208,7 +208,7 @@ new_X, new_Y = get_oos_predictions(models, X, y)
 #new
 
 
-model_stacker = lm.LogisticRegression()
+model_stacker = lm.Perceptron()
 print np.mean(cross_validation.cross_val_score(model_stacker, new_X, new_Y.reshape(new_Y.shape[0]), cv=5, scoring = auc_scorer))
 
 # <codecell>
