@@ -24,6 +24,7 @@ from itertools import combinations
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, ExtraTreesClassifier
 import operator
 import pickle
+from sklearn.calibration import CalibratedClassifierCV
 # <codecell>
 
 def tied_rank(x):
@@ -173,8 +174,8 @@ print "this step done"
          # RandomForestClassifier(n_estimators = 100),
           #GradientBoostingClassifier(n_estimators = 200),
           #]
-
-models = [lm.LogisticRegression()]
+per = lm.Perceptron()
+models = CalibratedClassifierCV(per, cv=10, method='isotonic')
 
 def get_oos_predictions(models, X, y, folds = 10):
     
