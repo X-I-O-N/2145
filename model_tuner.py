@@ -24,6 +24,7 @@ from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier,
 import operator
 from sklearn import svm
 import pickle
+from sklearn import *
 
 # <codecell>
 def tied_rank(x):
@@ -119,7 +120,7 @@ def normalize10day(stocks):
 # <codecell>
 
 print "loading data.."
-train = np.array(p.read_table('./standard.csv', sep = ","))
+train = np.array(p.read_table('./normalized.csv', sep = ","))
 test = np.array(p.read_table('./test.csv', sep = ","))
 
 ################################################################################
@@ -158,7 +159,7 @@ print "this step done"
 
 print "preparing models"
 
-modelname = "lasso"
+modelname = "MLPregressor"
 
 if modelname == "ridge": 
     C = np.linspace(300, 5000, num = 10)[::-1]
@@ -175,6 +176,10 @@ if modelname == "sgd":
 if modelname == "randomforest":
     C = np.linspace(50, 300, num = 10)
     models = [RandomForestClassifier(n_estimators = int(c)) for c in C]
+
+if modelname == "MLPregressor":
+    C = np.linspace(50, 300, num = 10)
+    models = [sklearn.neural_network.MLPRegressor(n_estimators = int(c)) for c in C]
 
 if modelname == "blend":
     C = np.linspace(300, 5000, num = 10)[::-1]
