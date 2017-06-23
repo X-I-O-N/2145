@@ -172,7 +172,7 @@ print "this step done"
           #lm.LogisticRegression(penalty='l1', C = 500),
          # RandomForestClassifier(n_estimators = 100),
           #GradientBoostingClassifier(n_estimators = 200),
-          ]
+          #]
 
 models = [lm.Perceptron(n_jobs=-1)]
 
