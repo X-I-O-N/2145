@@ -25,8 +25,6 @@ import operator
 from sklearn import svm
 import pickle
 from sklearn import *
-from sklearn.neural_network import *
-from sklearn.neural_network import MLPRegressor
 # <codecell>
 def tied_rank(x):
     """
@@ -160,7 +158,7 @@ print "this step done"
 
 print "preparing models"
 
-modelname = "MLPregressor"
+modelname = "Perceptron"
 
 if modelname == "ridge": 
     C = np.linspace(300, 5000, num = 10)[::-1]
@@ -178,9 +176,9 @@ if modelname == "randomforest":
     C = np.linspace(50, 300, num = 10)
     models = [RandomForestClassifier(n_estimators = int(c)) for c in C]
 
-if modelname == "MLPregressor":
+if modelname == "Perceptron":
     C = np.linspace(50, 300, num = 10)
-    models = [sklearn.neural_network.MLPRegressor(n_estimators = int(c)) for c in C]
+    models = [lm.Perceptron(n_estimators = int(c)) for c in C]
 
 if modelname == "blend":
     C = np.linspace(300, 5000, num = 10)[::-1]
