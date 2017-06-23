@@ -108,7 +108,7 @@ def normalize10day(stocks):
 # <codecell>
 
 print "loading data.."
-train = np.array(p.read_table('./training.csv', sep = ","))
+train = np.array(p.read_table('./normalized.csv', sep = ","))
 test = np.array(p.read_table('./test.csv', sep = ","))
 
 ################################################################################
@@ -168,10 +168,13 @@ print "this step done"
 
 #new
 
-models = [lm.LogisticRegression(penalty='l2', C = 5000),
-          lm.LogisticRegression(penalty='l1', C = 500),
-          RandomForestClassifier(n_estimators = 100),
-          GradientBoostingClassifier(n_estimators = 200),
+#models = [lm.LogisticRegression(penalty='l2', C = 5000),
+          #lm.LogisticRegression(penalty='l1', C = 500),
+         # RandomForestClassifier(n_estimators = 100),
+          #GradientBoostingClassifier(n_estimators = 200),
+          ]
+
+models = [lm.Perceptron(n_jobs=-1)
           ]
 
 def get_oos_predictions(models, X, y, folds = 10):
