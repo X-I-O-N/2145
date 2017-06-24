@@ -119,7 +119,7 @@ def normalize10day(stocks):
 # <codecell>
 
 print "loading data.."
-train = np.array(p.read_table('./normalized.csv', sep = ","))
+train = np.array(p.read_table('./min.csv', sep = ","))
 test = np.array(p.read_table('./test.csv', sep = ","))
 
 ################################################################################
@@ -158,7 +158,7 @@ print "this step done"
 
 print "preparing models"
 
-modelname = "Perceptron"
+modelname = "lasso"
 
 if modelname == "ridge": 
     C = np.linspace(300, 5000, num = 10)[::-1]
