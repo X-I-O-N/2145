@@ -24,7 +24,7 @@ from itertools import combinations
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, ExtraTreesClassifier
 import operator
 import pickle
-from sklearn.calibration import CalibratedClassifierCV
+#from sklearn.calibration import CalibratedClassifierCV
 # <codecell>
 
 def tied_rank(x):
