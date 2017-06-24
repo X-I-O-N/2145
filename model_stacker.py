@@ -169,13 +169,13 @@ print "this step done"
 
 #new
 
-#models = [lm.LogisticRegression(penalty='l2', C = 5000),
-          #lm.LogisticRegression(penalty='l1', C = 500),
-         # RandomForestClassifier(n_estimators = 100),
-          #GradientBoostingClassifier(n_estimators = 200),
-          #]
-per = lm.Perceptron()
-models = CalibratedClassifierCV(per, cv=10, method='isotonic')
+models = [lm.LogisticRegression(penalty='l2', C = 5000),
+          lm.LogisticRegression(penalty='l1', C = 500),
+          RandomForestClassifier(n_estimators = 100),
+          GradientBoostingClassifier(n_estimators = 200),
+          ]
+#per = lm.Perceptron()
+#models = CalibratedClassifierCV(per, cv=10, method='isotonic')
 
 def get_oos_predictions(models, X, y, folds = 10):
     
@@ -209,7 +209,7 @@ new_X, new_Y = get_oos_predictions(models, X, y)
 #new
 
 
-model_stacker = lm.Perceptron()
+model_stacker = lm.LogisticRegression()
 print np.mean(cross_validation.cross_val_score(model_stacker, new_X, new_Y.reshape(new_Y.shape[0]), cv=5, scoring = auc_scorer))
 
 # <codecell>
