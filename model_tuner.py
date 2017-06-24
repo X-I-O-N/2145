@@ -178,7 +178,7 @@ if modelname == "randomforest":
 
 if modelname == "Perceptron":
     C = np.linspace(50, 300, num = 10)
-    models = [lm.Perceptron(n_estimators = int(c)) for c in C]
+    models = [lm.Perceptron()]
 
 if modelname == "blend":
     C = np.linspace(300, 5000, num = 10)[::-1]
