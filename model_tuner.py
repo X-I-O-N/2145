@@ -210,23 +210,3 @@ best_model.fit(X, y)
 filename = 'model.sav'
 pickle.dump(best_model, open(filename, 'wb'))
 print "all done Teerth"
-
-
-modelname = "ridge"
-best_cv = 111
-best_C = 222
-
-print "prediction"
-# do a prediction and save it
-#X_test=best_model.transform(test)
-#best_model.fit(X_test, y)
-pred = best_model.predict_proba(X_test)[:,1]
-testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
-
-# submit as D multiplied by 100 + stock id
-testindices = [100 * D + StId for (D, StId) in testfile.index]
-
-pred_df = p.DataFrame(np.vstack((testindices, pred)).transpose(), columns=["Id", "Prediction"])
-pred_df.to_csv('./predictions/' + modelname + '/' + modelname + ' ' + strftime("%m-%d %X") + " C-" + str(round(best_C,4)) + " CV-" + str(round(best_cv, 4)) + ".csv", index = False)
-
-print "submission file created"
