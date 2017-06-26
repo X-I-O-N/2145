@@ -118,7 +118,7 @@ test = np.array(p.read_table('./bintest.csv', sep = ","))
 # READ IN THE TEST DATA
 ################################################################################
 # all data from opening 1 to straight to opening 10
-X_test_stockdata = normalize10day(test[:,range(2, 48)]) # load in test data
+X_test_stockdata = normalize10day(test[:,range(2, 50)]) # load in test data
 X_test_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(25)))
 
 #X_test = np.hstack((X_test_stockindicators, X_test_stockdata))
