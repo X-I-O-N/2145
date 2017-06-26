@@ -107,9 +107,9 @@ def normalize10day(stocks):
             return stocks[:,i] / stocks[:,0]
     n = stocks.shape[0]
     stocks_dat =  np.array([ process_column(i) for i in range(46)]).transpose()
-    stocks_movingavgO9O10 = np.array([int(i > j) for i,j in zip(stocks_dat[:,45], stocks_dat[:,40])]).reshape((n, 1))
-    stocks_movingavgC9O10 = np.array([int(i > j) for i,j in zip(stocks_dat[:,45], stocks_dat[:,43])]).reshape((n, 1))
-    return np.hstack((stocks_dat, stocks_movingavgO9O10, stocks_movingavgC9O10))
+    #stocks_movingavgO9O10 = np.array([int(i > j) for i,j in zip(stocks_dat[:,45], stocks_dat[:,40])]).reshape((n, 1))
+    #stocks_movingavgC9O10 = np.array([int(i > j) for i,j in zip(stocks_dat[:,45], stocks_dat[:,43])]).reshape((n, 1))
+    #return np.hstack((stocks_dat, stocks_movingavgO9O10, stocks_movingavgC9O10))
     return stocks_dat
     
 
@@ -146,11 +146,22 @@ X_stockdata = np.vstack(X_windows_normalized)
 X_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(n_windows)))
 
 #X = np.hstack((X_stockindicators, X_stockdata))
-X = X_stockdata
+#X = X_stockdata
 
 # read in the response variable
-y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
-y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
+#y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
+#y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
+
+# chain.from_iterable is basically a "flatten" function, that takes a list of lists and 
+# converts it to one list
+# columns we want are just the opening and closing prices
+columns_we_want = list(chain.from_iterable([[5 * x, 5 * x + 3] for x in range(10)]))[:-1]
+# we get our matrix of open and close prices, and normalize the data such that all data
+# is divided by the opening price on the first day
+X = np.array([l/l[0] for l in train[:, columns_we_want]])
+    
+# we make indicators of whether or not the stock went up that day.
+y = (train[:, 48] > train[:, 45]) + 0
 
 print "this step done"
 
