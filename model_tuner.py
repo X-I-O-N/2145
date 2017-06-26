@@ -2,6 +2,7 @@
 # <nbformat>3.0</nbformat>
 
 # <codecell>
+from itertools import chain
 import numpy as np
 import math
 from math import log
