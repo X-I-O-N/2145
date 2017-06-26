@@ -124,12 +124,12 @@ X_test_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(
 #X_test = np.hstack((X_test_stockindicators, X_test_stockdata))
 X_test = X_test_stockdata
 
-#n_windows = 490
-#windows = range(n_windows)
+n_windows = 490
+windows = range(n_windows)
 
 # read in the response variable
-#y_stockdata = np.vstack([test[:, [46 + 5*w, 49 + 5*w]] for w in windows])
-#y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
+y_stockdata = np.vstack([test[:, [46 + 5*w, 49 + 5*w]] for w in windows])
+y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
 
 #load model
 filename = 'model.sav'
@@ -145,7 +145,7 @@ best_C = 222
 print "prediction"
 # do a prediction and save it
 #X_test=best_model.transform(test)
-best_model.fit(X_test)
+best_model.fit(X_test, y)
 pred = best_model.predict_proba(X_test)[:,1]
 testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
 
