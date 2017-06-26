@@ -112,7 +112,7 @@ def normalize10day(stocks):
     #return np.hstack((stocks_dat, stocks_movingavgO9O10, stocks_movingavgC9O10))
     return stocks_dat
 
-test = np.array(p.read_table('./test.csv', sep = ","))
+test = np.array(p.read_table('./bintest.csv', sep = ","))
 
 ################################################################################
 # READ IN THE TEST DATA
