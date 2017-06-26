@@ -128,7 +128,7 @@ n_windows = 490
 windows = range(n_windows)
 
 # read in the response variable
-y_stockdata = np.vstack([test[:, [46 + 5*w, 49 + 5*w]] for w in windows])
+y_stockdata = np.vstack([test[:, [46 + 5*w, 48 + 5*w]] for w in windows])
 y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
 
 #load model
