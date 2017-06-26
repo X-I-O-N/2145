@@ -144,7 +144,7 @@ best_C = 222
 
 print "prediction"
 # do a prediction and save it
-X_test=best_model.transform(test)
+#X_test=best_model.transform(test)
 pred = best_model.predict_proba(X_test)[:,1]
 testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
 
