@@ -29,7 +29,7 @@ import pickle
 # <codecell>
 
 
-test = np.array(p.read_table('./test.csv', sep = ","))
+test = np.array(p.read_table('./bintest.csv', sep = ","))
 
 ################################################################################
 # READ IN THE TEST DATA
