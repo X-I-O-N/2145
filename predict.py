@@ -106,20 +106,20 @@ def normalize10day(stocks):
         else:
             return stocks[:,i] / stocks[:,0]
     n = stocks.shape[0]
-    stocks_dat =  np.array([ process_column(i) for i in range(46)]).transpose()
+    stocks_dat =  np.array([ process_column(i) for i in range(19)]).transpose()
     #stocks_movingavgO9O10 = np.array([int(i > j) for i,j in zip(stocks_dat[:,45], stocks_dat[:,40])]).reshape((n, 1))
     #stocks_movingavgC9O10 = np.array([int(i > j) for i,j in zip(stocks_dat[:,45], stocks_dat[:,43])]).reshape((n, 1))
     #return np.hstack((stocks_dat, stocks_movingavgO9O10, stocks_movingavgC9O10))
     return stocks_dat
 
-test = np.array(p.read_table('./test.csv', sep = ","))
+test = np.array(p.read_table('./bintest.csv', sep = ","))
 
 ################################################################################
 # READ IN THE TEST DATA
 ################################################################################
 # all data from opening 1 to straight to opening 10
 X_test_stockdata = normalize10day(test[:,range(2, 48)]) # load in test data
-X_test_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(25)))
+X_test_stockindicators = np.vstack((np.identity(1)[:,range(1)] for i in range(1)))
 
 #X_test = np.hstack((X_test_stockindicators, X_test_stockdata))
 X_test = X_test_stockdata
@@ -147,7 +147,7 @@ print "prediction"
 #X_test=best_model.transform(test)
 #best_model.fit(X_test, y)
 pred = best_model.predict_proba(X_test)[:,1]
-testfile = p.read_csv('./test.csv', sep=",", na_values=['?'], index_col=[0,1])
+testfile = p.read_csv('./bintest.csv', sep=",", na_values=['?'], index_col=[0,1])
 
 # submit as D multiplied by 100 + stock id
 testindices = [100 * D + StId for (D, StId) in testfile.index]
