@@ -2,6 +2,7 @@
 # <nbformat>3.0</nbformat>
 
 # <codecell>
+from sklearn import svm
 from itertools import chain
 import numpy as np
 import math
@@ -147,22 +148,22 @@ X_stockdata = np.vstack(X_windows_normalized)
 X_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(n_windows)))
 
 #X = np.hstack((X_stockindicators, X_stockdata))
-#X = X_stockdata
+X = X_stockdata
 
 # read in the response variable
-#y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
-#y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
+y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
+y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
 
 # chain.from_iterable is basically a "flatten" function, that takes a list of lists and 
 # converts it to one list
 # columns we want are just the opening and closing prices
-columns_we_want = list(chain.from_iterable([[5 * x, 5 * x + 3] for x in range(10)]))[:-1]
+#columns_we_want = list(chain.from_iterable([[5 * x, 5 * x + 3] for x in range(10)]))[:-1]
 # we get our matrix of open and close prices, and normalize the data such that all data
 # is divided by the opening price on the first day
-X = np.array([l/l[0] for l in train[:, columns_we_want]])
+#X = np.array([l/l[0] for l in train[:, columns_we_want]])
     
 # we make indicators of whether or not the stock went up that day.
-y = (train[:, 48] > train[:, 45]) + 0
+#y = (train[:, 48] > train[:, 45]) + 0
 
 print "this step done"
 
@@ -170,7 +171,7 @@ print "this step done"
 
 print "preparing models"
 
-modelname = "lasso"
+modelname = "svc"
 
 if modelname == "ridge": 
     C = np.linspace(300, 5000, num = 10)[::-1]
@@ -188,9 +189,9 @@ if modelname == "randomforest":
     C = np.linspace(50, 300, num = 10)
     models = [RandomForestClassifier(n_estimators = int(c)) for c in C]
 
-if modelname == "Perceptron":
+if modelname == "svc":
     C = np.linspace(50, 300, num = 10)
-    models = [lm.Perceptron()]
+    models = [svm.SVC()]
 
 if modelname == "blend":
     C = np.linspace(300, 5000, num = 10)[::-1]
