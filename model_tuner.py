@@ -149,7 +149,7 @@ X_stockindicators = np.vstack((np.identity(94)[:,range(93)] for i in range(n_win
 
 #X = np.hstack((X_stockindicators, X_stockdata))
 X = X_stockdata
-
+#X =preprocessing.normalize(X1, norm='l2')
 # read in the response variable
 y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
 y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
