@@ -191,7 +191,7 @@ if modelname == "randomforest":
 
 if modelname == "svc":
     C = np.linspace(50, 300, num = 10)
-    models = [svm.SVC()]
+    models = [svm.SVC(probability=True)]
 
 if modelname == "blend":
     C = np.linspace(300, 5000, num = 10)[::-1]
