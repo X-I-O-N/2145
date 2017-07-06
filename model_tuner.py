@@ -136,7 +136,7 @@ X_test = X_test_stockdata
 #np.identity(94)[:,range(93)]
 
 ################################################################################
-# READ IN THE TRAIN DATA################################################################################
+0# READ IN THE TRAIN DATA################################################################################
 n_windows = 490
 windows = range(n_windows)
 X_windows = [train[:,range(1 + 5*w, 47 + 5*w)] for w in windows]
@@ -170,7 +170,7 @@ print "preparing models"
 modelname = "knc"
 
 if modelname == "knc": 
-    C = np.linspace(5, 100, num = 10)[::-1]
+    C = np.linspace(5, 1000, num = 10)[::-1]
     models = [sklearn.neighbors.KNeighborsClassifier(n_jobs=-1, n_neighbors = int(c)) for c in C]
 
 if modelname == "ridge": 
