@@ -171,7 +171,11 @@ print "this step done"
 
 print "preparing models"
 
-modelname = "svc"
+modelname = "knc"
+
+if modelname == "knc": 
+    C = np.linspace(30, 500, num = 10)[::-1]
+    models = [sklearn.neighbors.KNeighborsClassifier(n_jobs=-1, leaf_size = int(c)) for c in C]
 
 if modelname == "ridge": 
     C = np.linspace(300, 5000, num = 10)[::-1]
