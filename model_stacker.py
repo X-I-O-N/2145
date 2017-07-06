@@ -221,7 +221,7 @@ pickle.dump(model_stacker, open(filename, 'wb'))
 print "all done Teerth"
 
 
-model_stacker.coef_
+print model_stacker.coef_
 
 #print "prediction"
 # do a prediction and save it
