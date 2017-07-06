@@ -170,7 +170,7 @@ print "preparing models"
 modelname = "knc"
 
 if modelname == "knc": 
-    C = np.linspace(5, 1000, num = 10)[::-1]
+    C = np.linspace(5, 10000, num = 10)[::-1]
     models = [sklearn.neighbors.KNeighborsClassifier(n_jobs=-1, n_neighbors = int(c)) for c in C]
 
 if modelname == "ridge": 
