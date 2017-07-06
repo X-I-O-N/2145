@@ -141,7 +141,6 @@ X_test = X_test_stockdata
 ################################################################################
 n_windows = 490
 windows = range(n_windows)
-
 X_windows = [train[:,range(1 + 5*w, 47 + 5*w)] for w in windows]
 X_windows_normalized = [normalize10day(w) for w in X_windows]
 X_stockdata = np.vstack(X_windows_normalized)
@@ -153,7 +152,6 @@ X = X_stockdata
 # read in the response variable
 y_stockdata = np.vstack([train[:, [46 + 5*w, 49 + 5*w]] for w in windows])
 y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
-
 # chain.from_iterable is basically a "flatten" function, that takes a list of lists and 
 # converts it to one list
 # columns we want are just the opening and closing prices
@@ -174,8 +172,8 @@ print "preparing models"
 modelname = "knc"
 
 if modelname == "knc": 
-    C = np.linspace(30, 500, num = 10)[::-1]
-    models = [sklearn.neighbors.KNeighborsClassifier(n_jobs=-1, leaf_size = int(c)) for c in C]
+    C = np.linspace(5, 20, num = 10)[::-1]
+    models = [sklearn.neighbors.KNeighborsClassifier(n_jobs=-1, n_neighbors = int(c)) for c in C]
 
 if modelname == "ridge": 
     C = np.linspace(300, 5000, num = 10)[::-1]
