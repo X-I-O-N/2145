@@ -2,7 +2,7 @@
 # <nbformat>3.0</nbformat>
 
 # <codecell>
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.ensemble import VotingClassifier
 from sklearn import svm
 from itertools import chain
 import numpy as np
