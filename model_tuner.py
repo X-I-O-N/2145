@@ -2,6 +2,7 @@
 # <nbformat>3.0</nbformat>
 
 # <codecell>
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn import svm
 from itertools import chain
 import numpy as np
@@ -183,7 +184,7 @@ modelname = "vote"
 
 if modelname == "vote": 
     C = np.linspace(5, 10000, num = 10)[::-1]
-    models = [sklearn.ensemble.VotingClassifier(estimators)]
+    models = [VotingClassifier(estimators)]
 
 if modelname == "knc": 
     C = np.linspace(5, 10000, num = 10)[::-1]
