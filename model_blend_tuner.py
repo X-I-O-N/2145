@@ -120,7 +120,7 @@ def normalize10day(stocks):
 # <codecell>
 
 print "loading data.."
-train = np.array(p.read_table('./training.csv', sep = ","))
+train = np.array(p.read_table('./FXGLORY5MIN.csv', sep = ","))
 test = np.array(p.read_table('./test.csv', sep = ","))
 
 ################################################################################
@@ -170,7 +170,7 @@ if modelname == "lasso":
     models = [lm.LogisticRegression(penalty='l2', C = 5000),
           lm.LogisticRegression(penalty='l1', C = 500),
           RandomForestClassifier(n_estimators = 100),
-          GradientBoostingClassifier(n_estimators = 200),
+          GradientBoostingClassifier(n_estimators = 200), sklearn.tree.DecisionTreeClassifier(max_depth=4), sklearn.neighbors.KNeighborsClassifier(n_neighbors=7)
           ]
 
 if modelname == "sgd": 
