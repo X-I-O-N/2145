@@ -170,7 +170,7 @@ print "preparing models"
 estimators = []
 model1 = lm.LogisticRegression()
 estimators.append(('logistic', model1))
-model2 = DecisionTreeClassifier()
+model2 = sklearn.tree.DecisionTreeClassifier()
 estimators.append(('cart', model2))
 model3 = RandomForestClassifier(n_estimators = 100)
 estimators.append(('rf', model3))
