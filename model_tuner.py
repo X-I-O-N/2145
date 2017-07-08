@@ -167,7 +167,23 @@ print "this step done"
 
 print "preparing models"
 
-modelname = "knc"
+estimators = []
+model1 = lm.LogisticRegression()
+estimators.append(('logistic', model1))
+model2 = DecisionTreeClassifier()
+estimators.append(('cart', model2))
+model3 = RandomForestClassifier(n_estimators = 100)
+estimators.append(('rf', model3))
+model4 = GradientBoostingClassifier(n_estimators = 200)
+estimators.append(('gbc', model4))
+model5 = lm.LogisticRegression(penalty = "l1", C = 5000)
+estimators.append(('lasso', model5))
+
+modelname = "vote"
+
+if modelname == "vote": 
+    C = np.linspace(5, 10000, num = 10)[::-1]
+    models = [VotingClassifier(estimators)]
 
 if modelname == "knc": 
     C = np.linspace(5, 10000, num = 10)[::-1]
