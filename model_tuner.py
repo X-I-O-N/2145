@@ -121,7 +121,7 @@ def normalize10day(stocks):
 # <codecell>
 
 print "loading data.."
-train = np.array(p.read_table('./mintest.csv', sep = ","))
+train = np.array(p.read_table('./Fxgloryinversed5min.csv', sep = ","))
 test = np.array(p.read_table('./bintest.csv', sep = ","))
 
 ################################################################################
