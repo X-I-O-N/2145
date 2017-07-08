@@ -183,7 +183,7 @@ modelname = "vote"
 
 if modelname == "vote": 
     C = np.linspace(5, 10000, num = 10)[::-1]
-    models = [VotingClassifier(estimators)]
+    models = [sklearn.ensemble.VotingClassifier(estimators)]
 
 if modelname == "knc": 
     C = np.linspace(5, 10000, num = 10)[::-1]
