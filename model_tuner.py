@@ -2,6 +2,7 @@
 # <nbformat>3.0</nbformat>
 
 # <codecell>
+from skflow import *
 from sklearn.ensemble import VotingClassifier
 from sklearn import svm
 from itertools import chain
@@ -180,7 +181,11 @@ estimators.append(('gbc', model4))
 model5 = lm.LogisticRegression(penalty = "l1", C = 5000)
 estimators.append(('lasso', model5))
 
-modelname = "vote"
+modelname = "DNN"
+
+if modelname == "DNN": 
+    C = np.linspace(300, 5000, num = 10)[::-1]
+    models = [skflow.TensorFlowDNNClassifier(hidden_units=[3,5,3], n_classes=3, steps=100]
 
 if modelname == "vote": 
     C = np.linspace(5, 10000, num = 10)[::-1]
