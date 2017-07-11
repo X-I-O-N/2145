@@ -234,7 +234,8 @@ if modelname == "keras":
 	C = np.linspace(300, 5000, num = 10)[::-1]
 	estimators = []
 	estimators.append(('standardize', StandardScaler()))
-	models = [estimators.append(('mlp', KerasClassifier(build_fn=create_smaller, epochs=100, batch_size=5, verbose=0)))]
+	estimators.append(('mlp', KerasClassifier(build_fn=create_smaller, epochs=100, batch_size=5, verbose=0)))
+	models = Pipeline(estimators)
 
 	
 
