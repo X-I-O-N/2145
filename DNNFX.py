@@ -331,20 +331,26 @@ if modelname == "blend":
           GradientBoostingClassifier(n_estimators = 200),  sklearn.neighbors.KNeighborsClassifier(),
           ]
 
-print "calculating cv scores"
-cv_scores = [0] * len(models)
-for i, model in enumerate(models):
+#print "calculating cv scores"
+#cv_scores = [0] * len(models)
+#for i, model in enumerate(models):
     # for all of the models, save the cross-validation scores into the array cv_scores
-    cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, scoring = auc_scorer, n_jobs=-1))
+ #   cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, scoring = auc_scorer, n_jobs=-1))
     #cv_scores[i] = np.mean(cross_validation.cross_val_score(model, X, y, cv=5, score_func = auc))
-    print " (%d/%d) C = %f: CV = %f" % (i + 1, len(C), C[i], cv_scores[i])
+  #  print " (%d/%d) C = %f: CV = %f" % (i + 1, len(C), C[i], cv_scores[i])
 
 # find which model and C is the best
-best = cv_scores.index(max(cv_scores))
-best_model = models[best]
-best_cv = cv_scores[best]
-best_C = C[best]
-print "BEST %f: %f" % (best_C, best_cv)
+#best = cv_scores.index(max(cv_scores))
+#best_model = models[best]
+#best_cv = cv_scores[best]
+#best_C = C[best]
+#print "BEST %f: %f" % (best_C, best_cv)
+
+print "SCORING DNN"
+kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
+results = cross_val_score(pipeline, X, y, cv=kfold)
+print("Smaller: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
+best_model = models
 
 print "training on full data"
 # fit the best model on the full data
