@@ -9,6 +9,17 @@
 
 # <codecell>
 #import autosklearn.classification
+import numpy
+import pandas
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.wrappers.scikit_learn import KerasClassifier
+from sklearn.model_selection import cross_val_score
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import StratifiedKFold
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+
 from evolutionary_search import EvolutionaryAlgorithmSearchCV
 from skflow import *
 from mlxtend.classifier import StackingClassifier
@@ -180,14 +191,52 @@ y = (y_stockdata[:,1] - y_stockdata[:,0] > 0) + 0
 print "this step done"
 
 print "tuning models using genetic algo"
+# baseline model
+def create_baseline():
+	# create model
+	model = Sequential()
+	model.add(Dense(1288, input_dim=1288, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
+	# Compile model
+	model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+	return model
 
+
+# larger model
+def create_larger():
+	# create model
+	model = Sequential()
+	model.add(Dense(1288, input_dim=1288, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(644, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
+	# Compile model
+	model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+	return model
+
+# smaller model
+def create_smaller():
+	# create model
+	model = Sequential()
+	model.add(Dense(644, input_dim=1288, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
+	# Compile model
+	model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+	return model
 
 
 # <codecell>
 
 print "preparing models"
 
-modelname = "voteDNN3nostack"
+modelname = "keras"
+
+if modelname == "keras":
+	C = np.linspace(300, 5000, num = 10)[::-1]
+	estimators = []
+	estimators.append(('standardize', StandardScaler()))
+	models = [estimators.append(('mlp', KerasClassifier(build_fn=create_smaller, epochs=100, batch_size=5, verbose=0)))]
+
+	
 
 if modelname == "voteDNN3nostack": 
     C = np.linspace(300, 5000, num = 10)[::-1]
