@@ -346,6 +346,11 @@ if modelname == "blend":
 #best_C = C[best]
 #print "BEST %f: %f" % (best_C, best_cv)
 
+
+# fix random seed for reproducibility
+seed = 7
+numpy.random.seed(seed)
+
 print "SCORING DNN"
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 results = cross_val_score(pipeline, X, y, cv=kfold)
