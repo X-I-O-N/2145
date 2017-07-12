@@ -353,7 +353,7 @@ numpy.random.seed(seed)
 
 print "SCORING DNN"
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
-results = cross_val_score(pipeline, X, y, cv=kfold)
+results = cross_val_score(models, X, y, cv=kfold)
 print("Smaller: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
 best_model = models
 
